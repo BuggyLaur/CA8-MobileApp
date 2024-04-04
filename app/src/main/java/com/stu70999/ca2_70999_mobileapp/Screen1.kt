@@ -1,8 +1,8 @@
 package com.stu70999.ca2_70999_mobileapp
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,16 +18,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Screen1(navController: NavController) {
@@ -57,49 +55,56 @@ fun Screen1(navController: NavController) {
                     text = "CHOOSE YOUR MOVIE",
                 )
             }
+
+            ToScreen3Button(onClick = {
+                navController.navigate(Routes.SecondScreen.route)})
         })
 
-    { innerPadding ->
+    {  innerPadding ->
         Column(
             modifier = Modifier
                 .background(color = Color.Black)
                 .padding(innerPadding)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            val imageResources = listOf(
+            R.drawable.panda1,
+            R.drawable.p2,
+            R.drawable.p3,
+            R.drawable.p4,
+            R.drawable.p5,
+            R.drawable.p6,
+        )
 
             LazyVerticalGrid(
-                columns = GridCells.Fixed(1)
+                columns = GridCells.Fixed(2)
             ) {
-                itemsIndexed(movies) { _, movie ->
-                    Card(
-                        modifier = Modifier.padding(5.dp).fillMaxWidth(),
-                        onClick = { navController.navigate("NextScreen/${movie.name}") }
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-
-                            ) {
-                            Image(
-                                painter = rememberAsyncImagePainter(model = movie.image),
-                                contentDescription = movie.description,
-                                contentScale = ContentScale.FillBounds,
-                                modifier = Modifier.fillMaxSize().size(300.dp)
-                            )
-                        }
-                    }
+                items(imageResources.size) { index ->
+                    Card (
+                        modifier = Modifier.padding(10.dp),
+                        onClick = navController.navigate("SecondScreen/${index + 1}")
+                    )
+                    {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .size(270.dp),
+                        contentScale = ContentScale.FillBounds,
+                        contentDescription = "Menu of movies $index",
+                        painter = painterResource(imageResources[index])
+                    )
                 }
             }
         }
     }
+    }
 }
 
-fun rememberAsyncImagePainter(model: String): Painter {
-    TODO("Not yet implemented")
-}
+
+
+
+
+
 
 
 /*
