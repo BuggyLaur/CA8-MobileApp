@@ -25,5 +25,25 @@ fun AppNavigation() {
         {
             Screen3(navController = navController)
         }
+
+        composable(route = Routes.FourthScreen.route)
+        {
+            Screen3(navController = navController)
+        }
+
+        composable(route = Routes.FifthScreen.route)
+        {
+            Screen3(navController = navController)
+        }
+
+        composable(route = Routes.SixthScreen.route)
+        {
+            Screen3(navController = navController)
+        }
+
+        composable(route = Routes.SeventhScreen.route)
+        {
+            Screen3(navController = navController)
+        }
     }
 }

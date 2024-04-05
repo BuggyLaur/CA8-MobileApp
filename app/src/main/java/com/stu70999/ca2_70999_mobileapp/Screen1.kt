@@ -82,11 +82,8 @@ fun Screen1(navController: NavController) {
             ) {
                 items(imageResources.size) { index ->
                     val imageName = "Panda${index + 1}"
-                    val isFirstImageClickable = index == 1
                     ClickableImage(
-                        clickable = isFirstImageClickable,
                         onClick = {
-
                             navController.navigate(Routes.SecondScreen.route)
                         },
                         imageResource = imageResources[index],
@@ -100,34 +97,18 @@ fun Screen1(navController: NavController) {
 
 @Composable
 fun ClickableImage(
-    clickable: Boolean,
     onClick: () -> Unit,
     imageResource: Int,
     contentDescription: String
 ) {
-    val modifier = if (clickable) {
-        Modifier.clickable(onClick = onClick)
-    } else {
-        Modifier
-    }
     Image(
         modifier = Modifier
-            .fillMaxSize()
-            .size(270.dp)
-            .clickable(onClick = onClick),
+           .clickable(onClick = onClick),
         contentScale = ContentScale.FillBounds,
         contentDescription = contentDescription,
         painter = painterResource(imageResource),
     )
 }
-
-
-
-
-
-
-
-
 
 
 /*
