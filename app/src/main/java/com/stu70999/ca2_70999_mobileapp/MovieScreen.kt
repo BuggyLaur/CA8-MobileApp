@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.stu70999.ca2_70999_mobileapp.ui.theme.movies
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +52,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
     Text(text = "Movie Details:  ${movie?.name}")
 
     val iceblue = Color(0xFF9DF7E5)
+
     Scaffold(
         topBar = {
             TopAppBar(colors = TopAppBarDefaults.topAppBarColors(
@@ -230,11 +232,9 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                         color = Color.White,
                         maxLines = 10,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(bottom = 100.dp), // Add this line,
+                        modifier = Modifier.padding(bottom = 100.dp),
                         fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
-
                         )
-
                 }
             }
         }

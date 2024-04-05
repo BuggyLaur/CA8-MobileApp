@@ -32,12 +32,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.stu70999.ca2_70999_mobileapp.ui.theme.movies
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(navController: NavController) {
 
     val iceblue = Color(0xFF9DF7E5)
+
     Scaffold(
         topBar = {
             TopAppBar(colors = TopAppBarDefaults.topAppBarColors(
