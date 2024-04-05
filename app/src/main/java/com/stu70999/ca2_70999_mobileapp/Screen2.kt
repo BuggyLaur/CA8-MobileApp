@@ -48,9 +48,6 @@ import coil.compose.rememberAsyncImagePainter
 
 
 
-
-
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -133,6 +130,9 @@ fun Screen2( movieName: String?, navController: NavController) {
                     }
 
                 }
+
+                ToScreen3Button(onClick = {
+                    navController.navigate(Routes.SecondScreen.route)})
             }
         }
 

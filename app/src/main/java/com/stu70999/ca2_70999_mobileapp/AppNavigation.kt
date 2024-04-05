@@ -19,7 +19,7 @@ fun AppNavigation() {
         }
         composable(route = Routes.SecondScreen.route)
         {
-            Screen2(navController = navController)
+            Screen2(movieName = null,navController = navController)
         }
         composable(route = Routes.ThirdScreen.route)
         {
