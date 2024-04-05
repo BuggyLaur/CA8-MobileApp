@@ -3,6 +3,7 @@ package com.stu70999.ca2_70999_mobileapp
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -80,25 +81,47 @@ fun Screen1(navController: NavController) {
                 columns = GridCells.Fixed(2)
             ) {
                 items(imageResources.size) { index ->
-                    Card (
-                        modifier = Modifier.padding(10.dp),
-                        onClick = navController.navigate("SecondScreen/${index + 1}")
-                    )
-                    {
-                    Image(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .size(270.dp),
-                        contentScale = ContentScale.FillBounds,
-                        contentDescription = "Menu of movies $index",
-                        painter = painterResource(imageResources[index])
+                    val imageName = "Panda${index + 1}"
+                    val isFirstImageClickable = index == 1
+                    ClickableImage(
+                        clickable = isFirstImageClickable,
+                        onClick = {
+
+                            navController.navigate(Routes.SecondScreen.route)
+                        },
+                        imageResource = imageResources[index],
+                        contentDescription = "Menu of movies $imageName"
                     )
                 }
             }
         }
     }
-    }
 }
+
+@Composable
+fun ClickableImage(
+    clickable: Boolean,
+    onClick: () -> Unit,
+    imageResource: Int,
+    contentDescription: String
+) {
+    val modifier = if (clickable) {
+        Modifier.clickable(onClick = onClick)
+    } else {
+        Modifier
+    }
+    Image(
+        modifier = Modifier
+            .fillMaxSize()
+            .size(270.dp)
+            .clickable(onClick = onClick),
+        contentScale = ContentScale.FillBounds,
+        contentDescription = contentDescription,
+        painter = painterResource(imageResource),
+    )
+}
+
+
 
 
 
