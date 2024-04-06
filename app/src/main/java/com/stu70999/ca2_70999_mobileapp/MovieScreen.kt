@@ -19,12 +19,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.ArrowCircleLeft
 import androidx.compose.material.icons.filled.EventSeat
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -42,8 +48,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.stu70999.ca2_70999_mobileapp.ui.theme.movies
+import kotlin.random.Random
 
+
+fun generateRandomColor(): Color {
+    val random = Random
+    val red = random.nextInt(256)
+    val green = random.nextInt(256)
+    val blue = random.nextInt(256)
+    return Color(red, green, blue)
+}
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,14 +65,24 @@ fun MovieScreen( movieName: String?, navController: NavController) {
     val movie = movies.find { it.name == movieName }
     Text(text = "Movie Details:  ${movie?.name}")
 
-    val iceblue = Color(0xFF9DF7E5)
+    val randomColor = generateRandomColor()
 
     Scaffold(
         topBar = {
             TopAppBar(colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = iceblue,
+                containerColor = randomColor,
                 titleContentColor = Color.White,
-            ), title = {
+            ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowCircleLeft,
+                            contentDescription = "Browse back to the home menu",
+                            tint = Color.White
+                        )
+                    }
+                },
+                title = {
                 Row (
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
@@ -72,7 +96,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = iceblue,
+                containerColor = randomColor,
                 contentColor = Color.White,
             ) {
                 Row(
@@ -83,8 +107,9 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                     Text(
                         fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
                         text = "Select Seats: ",
+                        fontSize = 14.sp,
                         modifier = Modifier
-                            .padding(start = 8.dp)
+                            .padding(start = 4.dp)
                     )
 
                     IconButton(onClick = {
@@ -93,7 +118,8 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                             movie.seatsRemaining.value++
                         }
                     }) {
-                        Icon(Icons.Filled.Remove, contentDescription = "Remove Seat")
+                        Icon(Icons.Filled.RemoveCircle,
+                            contentDescription = "Remove Seat")
                     }
                     Text(
                         text = "${movie?.seatsSelected?.value}",
@@ -105,12 +131,12 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                             movie.seatsRemaining.value--
                         }
                     }) {
-                        Icon(Icons.Filled.Add, contentDescription = "Add Seat")
+                        Icon(Icons.Filled.AddCircle, contentDescription = "Add Seat")
                     }
 
 
 
-                    val iconColor = if (movie?.seatsRemaining?.value!! > 3) Color.Green else Color.Red
+                    val iconColor = if (movie?.seatsRemaining?.value!! > 2) Color.White else Color.Red
                     if (movie.seatsRemaining.value != 0) {
                         Icon(
                             Icons.Filled.EventSeat,
@@ -121,9 +147,9 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                     }
 
                     if (movie.seatsRemaining.value > 0) {
-                        Text(
+                        Text( fontSize = 14.sp,
                             fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
-                            text = "${movie.seatsRemaining.value}  Remaining Seats"
+                            text = "${movie.seatsRemaining.value} Seats Remaining"
                         )
                     }
 
@@ -136,7 +162,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
             contentPadding = PaddingValues(top = 60.dp),
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.DarkGray),
+                .background(color = Color.Black),
 
 
             ) {
@@ -169,7 +195,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                         )
                         if (movie?.seatsRemaining?.value!! <= 3 && movie.seatsRemaining.value > 0) {
                             Text(
-                                text = "Filling Fast",
+                                text = "",
                                 color = Color.Red,
                                 modifier = Modifier.padding(start = 16.dp),
                                 fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
@@ -177,9 +203,10 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                         }
                         if (movie.seatsRemaining.value == 0) {
                             Text(
+                                modifier = Modifier.padding(horizontal = 16.dp) ,// Add horizontal padding
                                 text = "No seats available",
                                 color = Color.Red,
-                                modifier = Modifier.padding(start = 16.dp),
+                                //modifier = Modifier.padding(start = 16.dp),
                                 fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
                             )
                         }
@@ -215,7 +242,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                             fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
                         )
                         Text(
-                            text = "${movie?.runningTimeMin} mins",
+                            text = "${movie?.runningTimeMins} mins",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color(android.graphics.Color.parseColor("#6E6E6E")),

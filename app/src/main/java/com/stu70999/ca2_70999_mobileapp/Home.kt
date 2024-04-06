@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -24,26 +25,33 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.stu70999.ca2_70999_mobileapp.ui.theme.movies
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(navController: NavController) {
 
-    val iceblue = Color(0xFF9DF7E5)
+    val color1 = Color(0xFFc9ffbf)
+    val color2 = Color(0xFFffafbd)
+    val virgin = Brush.horizontalGradient(
+        colors = listOf(color1, color2)
+    )
 
     Scaffold(
         topBar = {
-            TopAppBar(colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = iceblue,
+            TopAppBar( modifier = Modifier.background(virgin),
+                colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Transparent,
                 titleContentColor = Color.White,
             ),
                 title = {
@@ -52,27 +60,14 @@ fun Home(navController: NavController) {
                         horizontalArrangement = Arrangement.Center,
                     ) {
                         Image(
-                            painter = rememberAsyncImagePainter(model = "https://www.myvue.com/-/jssmedia/global/img/logo-header-vue.png?mw=90&mh=40&rev=5d978a6ad9c04cac97869073febdf5c4"),
+
+                            modifier = Modifier.size(140.dp),
+                            painter = painterResource(id = R.drawable.movie_removebg_preview),
                             contentDescription = "Logo",
-                            modifier = Modifier.size(85.dp),
                         )
                     }
                 }
             )
-        },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = iceblue,
-                contentColor = Color.White,
-            ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "VUE CINEMA",
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                    fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
-                )
-            }
         },
     ) { innerPadding ->
         Column (

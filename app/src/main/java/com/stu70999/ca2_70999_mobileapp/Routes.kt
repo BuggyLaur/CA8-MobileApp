@@ -1,4 +1,4 @@
-package com.stu70999.ca2_70999_mobileapp.ui.theme
+package com.stu70999.ca2_70999_mobileapp
 
 object Routes {
     const val Home = "HomeScreen"
