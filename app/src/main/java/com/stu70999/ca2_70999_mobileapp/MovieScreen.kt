@@ -136,7 +136,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
 
 
 
-                    val iconColor = if (movie?.seatsRemaining?.value!! > 2) Color.White else Color.Red
+                    val iconColor = if (movie?.seatsRemaining?.value!! > 3) Color.White else Color.Red
                     if (movie.seatsRemaining.value != 0) {
                         Icon(
                             Icons.Filled.EventSeat,
@@ -195,18 +195,17 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                         )
                         if (movie?.seatsRemaining?.value!! <= 3 && movie.seatsRemaining.value > 0) {
                             Text(
-                                text = "",
-                                color = Color.Red,
+                                text = "Filling Fast",
+                                color = randomColor,
                                 modifier = Modifier.padding(start = 16.dp),
                                 fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
                             )
                         }
                         if (movie.seatsRemaining.value == 0) {
                             Text(
-                                modifier = Modifier.padding(horizontal = 16.dp) ,// Add horizontal padding
+                                modifier = Modifier.padding(horizontal = 16.dp) ,
                                 text = "No seats available",
                                 color = Color.Red,
-                                //modifier = Modifier.padding(start = 16.dp),
                                 fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
                             )
                         }
