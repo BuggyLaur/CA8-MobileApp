@@ -185,6 +185,7 @@ fun MovieScreen( movieName: String?, navController: NavController) {
                             fontWeight = FontWeight.Normal,
                             color = Color(android.graphics.Color.parseColor("#D3D3D3")),
                             fontFamily = FontFamily(Font(resId = R.font.roboto_condensed_regular)),
+
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Image(
